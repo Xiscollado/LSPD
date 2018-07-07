@@ -8,7 +8,8 @@
 
 <script>
 import ficha from './FileComponent'
-import FilesService from '../services/FilesService'
+import axios from 'axios'
+
 export default {
   data () {
     return {
@@ -22,9 +23,10 @@ export default {
     }
   },
   components: { ficha },
-  mounted () {
-    // Mockup de la base de datos
-    this.files = FilesService.getFiles()
+  created () {
+    axios
+      .get('http://127.0.0.1:8000/api/files/')
+      .then(response => (this.files = response.data.data))
   }
 }
 </script>

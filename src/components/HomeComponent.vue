@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import sidebar from './SidebarComponent'
 import fichas from './FilesComponent'
 
@@ -30,11 +29,6 @@ export default {
       info: 'loading',
       query: ''
     }
-  },
-  mounted () {
-    axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.info = response))
-  },
+  }
 }
 </script>

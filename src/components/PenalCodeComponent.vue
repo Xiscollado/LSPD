@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mb-4">
       <div class="col">
-        <h2><strong>Penal Code</strong></h2>
+        <h2><strong>Código penal</strong></h2>
       </div>
     </div>
     <div class="row">

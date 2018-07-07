@@ -10,12 +10,12 @@
       <ul class="nav justify-content-end">
         <li class="nav-item">
           <router-link class="nav-link" to="/">
-            Volver al inicio
+            Fichas
           </router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/penal-code">
-            Ir al código penal
+            Código penal
           </router-link>
         </li>
         <li class="nav-item">

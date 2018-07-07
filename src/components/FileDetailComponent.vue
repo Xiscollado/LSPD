@@ -1,17 +1,19 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-8">
+      <div class="col-3">
+        <img v-bind:src="file.image" alt="Criminal image" class="img-fluid img-thumbnail mb-4">
+        <header>
+          <h1><strong>{{ file.name }}</strong></h1>
+          <h3>{{ file.cardID }}</h3>
+        </header>
+        <span v-show="file.isOnSeek" class="badge badge-warning">EN BUSCA Y CAPTURA</span>
+        <span class="badge badge-dark">Crímenes: 23</span>
+        <span class="badge badge-danger">Peligroso</span>
+      </div>
+      <div class="col-6">
         <div class="row">
           <div class="col-12">
-            <header>
-              <h1><strong>{{ file.name }}</strong></h1>
-              <h3>{{ file.cardID }}</h3>
-            </header>
-            <span v-show="file.isOnSeek" class="badge badge-warning">EN BUSCA Y CAPTURA</span>
-            <span class="badge badge-dark">Crímenes: 23</span>
-            <span class="badge badge-danger">Peligroso</span>
-            <hr>
             <div class="row">
               <div class="col-12">
                 <h4>Delitos cometidos</h4>
@@ -65,29 +67,46 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
-        <img v-bind:src="file.image" alt="Criminal image" class="img-fluid img-thumbnail mb-4">
-        <button class="btn btn-primary btn-block">Quitar de búsqueda y captura</button>
+      <div class="col-3">
+        <button class="btn btn-success btn-block" v-on:click="addCrimes">Asignar crímenes</button>
+        <button class="btn btn-primary btn-block">Búsqueda y captura</button>
+        <button class="btn btn-primary btn-block">Peligroso</button>
         <sidebar sidebarPage="home" class="mt-4"></sidebar>
       </div>
     </div>
   </div>
 </template>
 <script>
-import FilesService from '../services/FilesService'
 import sidebar from './SidebarComponent'
+import axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      file: null,
-      files: null
+      file: null
     }
+  },
+  computed: {
+    ...mapGetters([
+      'getCrimesCart'
+    ])
   },
   components: {sidebar},
   created () {
-    let id = this.$route.params.id
-    this.files = FilesService.getFiles()
-    this.file = FilesService.getFileByID(id, this.files)
+    axios
+      .get('http://127.0.0.1:8000/api/files/' + this.$route.params.id)
+      .then(response => (this.file = response.data.data))
+  },
+  methods: {
+    addCrimes () {
+      axios
+        .post('http://127.0.0.1:8000/api/files/' + this.$route.params.id, this.getCrimesCart)
+        .then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    }
   }
 }
 </script>
