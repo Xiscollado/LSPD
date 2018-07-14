@@ -1,10 +1,9 @@
 <template>
-  <nav class="navbar navbar-dark bg-primary fixed-top">
+  <nav class="navbar navbar-light bg-light fixed-top">
     <div class="container">
 
       <a class="navbar-brand" href="#">
-        <img src="../assets/lspd_logo.png" width="30" height="30" alt="">
-        <strong>LSPD</strong>
+        <img src="../assets/lspd_logo.png" height="50" alt="">
       </a>
 
       <ul class="nav justify-content-end">
@@ -19,12 +18,9 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" v-if="Object.keys(this.$store.state.user).length === 0">{{ $t("topbar.login")
-            }}</a>
-          <a class="nav-link" href="#" v-else>logout</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">{{ $t("topbar.register") }}</a>
+          <router-link class="nav-link" to="/login" v-if="!accessToken">{{ $t("topbar.login")
+            }}</router-link>
+          <a class="nav-link" href="#" v-on:click.prevent="logout" v-else>logout</a>
         </li>
       </ul>
 
@@ -33,5 +29,26 @@
 </template>
 
 <script>
-  export default {}
+  import { mapGetters, mapActions } from 'vuex'
+export default {
+  data () {
+    return {
+      register_url: process.env.API_URL + '/register'
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'accessToken'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'deleteAccessToken'
+    ]),
+    logout (){
+      this.deleteAccessToken()
+      this.$router.push('/login')
+    }
+  }
+}
 </script>

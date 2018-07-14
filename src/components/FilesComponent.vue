@@ -1,9 +1,10 @@
 <template>
-<div class="row">
-  <div class="col-md-4" v-for="file in files" v-show="(file.name.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.cardID.toLowerCase()).indexOf(query.toLowerCase()) !== -1">
-    <ficha :file="file"></ficha>
+  <div class="row">
+    <div class="col-md-3" v-for="file in files"
+         v-show="(file.firstname.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.name.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.registration.toLowerCase()).indexOf(query.toLowerCase()) !== -1">
+      <ficha :file="file"></ficha>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -22,11 +23,18 @@ export default {
       required: false
     }
   },
-  components: { ficha },
+  components: {ficha},
   created () {
-    axios
-      .get('http://127.0.0.1:8000/api/files/')
-      .then(response => (this.files = response.data.data))
+    axios.get(this.$store.state.api.url + '/files', {
+      headers: {
+        Authorization: 'Bearer ' + this.$store.state.access_token
+      }
+    }).then(response => this.updateFiles(response))
+  },
+  methods: {
+    updateFiles (files){
+      this.files = files.data;
+    }
   }
 }
 </script>

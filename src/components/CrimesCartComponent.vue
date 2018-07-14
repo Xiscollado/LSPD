@@ -14,7 +14,8 @@
   </ul>
   <footer v-show="getCrimesCart.length > 0" class="mt-4">
     <h4><strong>Total</strong></h4>
-    <strong>Multas: {{ getFinesCount }} / Meses: {{ getMonthsCount}}</strong>
+    <strong>Multas: {{ getFinesCount }} $ / Meses: {{ getMonthsCount}}</strong>
+    <router-link to="copy" class="btn btn-success mt-4 btn-block">Generar Texto de delitos</router-link>
   </footer>
 </section>
 </template>

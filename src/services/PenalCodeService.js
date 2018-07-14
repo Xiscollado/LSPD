@@ -1,43 +1,55 @@
 export default {
-  // Get all penal code from DDBB
-  // TODO change this for an axios call
-  getPenalCode () {
-    return [
-      {
-        id: 1,
-        title: 'Uso excesivo del claxon',
-        description: 'Utilizar de forma repetida el claxon',
-        chapter: 1,
-        fine: 125,
-        months: 0,
-        updated: '06/06/2018'
-      },
-      {
-        id: 2,
-        title: 'Alteración del orden público',
-        description: 'Momento en el que por medio hay una agresión física. Exceso de ruido en la vía pública, increpar constantemente a civiles',
-        chapter: 2,
-        fine: 1000,
-        months: 10,
-        updated: '04/01/2017'
-      }
-    ]
-  },
-  getPenalCodeChapters () {
+  getPenalCodeChapters() {
     return [
       {
         id: 1,
         number: 1,
-        title: 'Chapter 1 title'
+        title: '1 - Delitos de tráfico'
       },
       {
         id: 2,
         number: 2,
-        title: 'Chapter 2 title'
+        title: '2 - Agresiones, disturbios y conductas erróneas.'
       },
       {
+        id: 3,
         number: 3,
-        title: 'Chapter 3 title'
+        title: '3 - Robos y asaltos.'
+      },
+      {
+        id: 4,
+        number: 4,
+        title: '4 - Porte y tenencia de armas de fuego. Objetos ilegales.'
+      },
+      {
+        id: 5,
+        number: 5,
+        title: '5 - Delitos contra la salud pública.'
+      },
+      {
+        id: 6,
+        number: 6,
+        title: '6 - Delitos contra la integridad física del ciudadano.'
+      },
+      {
+        id: 7,
+        number: 7,
+        title: '7 - Delitos contra la administración pública.'
+      },
+      {
+        id: 8,
+        number: 8,
+        title: '8 - Delitos de la Administración pública.'
+      },
+      {
+        id: 9,
+        number: 9,
+        title: '9 - Delitos contra los animales.'
+      },
+      {
+        id: 10,
+        number: 10,
+        title: '10 - Delitos cometidos por los establecimientos, servicios y autónomos.'
       }
     ]
   },

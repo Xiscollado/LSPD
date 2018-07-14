@@ -9,6 +9,14 @@ import i18n from './lang'
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  if (!store.state.access_token && to.path !== '/login') {
+    next('/login')
+  } else {
+    next()
+  }
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

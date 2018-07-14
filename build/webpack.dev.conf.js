@@ -12,6 +12,7 @@ const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+const API_HOST = 'http://localhost:8000'
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {

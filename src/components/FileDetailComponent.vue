@@ -1,111 +1,130 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-3">
-        <img v-bind:src="file.image" alt="Criminal image" class="img-fluid img-thumbnail mb-4">
+      <div class="col-md-3">
+        <img src="../assets/placeholder.png" alt="Criminal image" class="img-fluid img-thumbnail mb-4">
         <header>
-          <h1><strong>{{ file.name }}</strong></h1>
-          <h3>{{ file.cardID }}</h3>
+          <h2 class="mb-3"><strong>{{ data.result.name }} {{ data.result.firstname }}</strong></h2>
+          <h5><strong>DNI:</strong> {{ data.result.registration }}</h5>
+          <h5><strong>ID:</strong> {{ data.result.user_id }}</h5>
+          <h5><strong>EDAD:</strong> {{ data.result.age }}</h5>
+          <h5><strong>TELF:</strong> {{ data.result.phone }}</h5>
+          <h5><strong>BANK:</strong> {{ money }} $</h5>
         </header>
-        <span v-show="file.isOnSeek" class="badge badge-warning">EN BUSCA Y CAPTURA</span>
-        <span class="badge badge-dark">Crímenes: 23</span>
-        <span class="badge badge-danger">Peligroso</span>
       </div>
-      <div class="col-6">
+      <div class="col-md-9">
         <div class="row">
           <div class="col-12">
             <div class="row">
               <div class="col-12">
-                <h4>Delitos cometidos</h4>
+                <h4>Antecedentes penales</h4>
                 <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Cras justo odio
-                    <span class="badge badge-primary badge-pill">14</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Dapibus ac facilisis in
-                    <span class="badge badge-primary badge-pill">2</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Morbi leo risus
-                    <span class="badge badge-primary badge-pill">1</span>
-                  </li>
+                  <li class="list-group-item" v-for="crime in data.crimes">{{ crime }}</li>
+                </ul>
+                <h4 class="mt-4">Deudas</h4>
+                <ul class="list-group">
+                  <li class="list-group-item" v-for="deuda in data.deudas">{{ deuda }}</li>
                 </ul>
               </div>
-              <div class="col-12 mt-4">
-                <h4>Propiedades conocidas</h4>
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Cras justo odio
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Dapibus ac facilisis in
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Morbi leo risus
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="row mt-4">
-              <div class="col">
-                <h4>Notas</h4>
-                <p>Contrary to popular belief, Lorem Ipsum is not simply random text.
-                  It has roots in a piece of classical Latin literature from 45 BC, making
-                  it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
-                  College in Virginia, looked up one of the more obscure Latin words, consectetur,
-                  from a Lorem Ipsum passage, and going through the cites of the word in classical literature,
-                  discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                  Bonorum et Malorum"
-                  (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of
-                  ethics, very popular
-                  during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a
-                  line in section 1.10.32.
-                </p>
+              <div class="col-12 mt-4 mb-4">
+                <h4>Propiedades</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <h5 v-show="vehicles" class="mt-4 mb-4"><strong>Vehículos (work in progress..)</strong></h5>
+                    <ul v-if="vehicles" class="list-group">
+                      <li class="list-group-item" v-for="vehicle in vehicles">{{ vehicle.vehicle }}</li>
+                    </ul>
+                  </div>
+                  <div class="col-6">
+                    <h5 v-show="homes" class="mt-4 mb-4"><strong>Casas en propiedad</strong></h5>
+                    <ul v-if="homes" class="list-group mb-4">
+                      <li class="list-group-item" v-for="home in homes">{{ home.home }} {{ home.number }}</li>
+                    </ul>
+                    <h5 v-show="business" class="mt-4 mb-4"><strong>Negocios conocidos</strong></h5>
+                    <ul v-if="business" class="list-group mb-4">
+                      <li class="list-group-item"><strong>Negocio de {{ business.nombre }}</strong> Con un capital de: {{ business.capital }} $ </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-3">
-        <button class="btn btn-success btn-block" v-on:click="addCrimes">Asignar crímenes</button>
-        <button class="btn btn-primary btn-block">Búsqueda y captura</button>
-        <button class="btn btn-primary btn-block">Peligroso</button>
-        <sidebar sidebarPage="home" class="mt-4"></sidebar>
-      </div>
     </div>
   </div>
 </template>
 <script>
-import sidebar from './SidebarComponent'
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+
 export default {
-  data () {
+  data() {
     return {
-      file: null
+      data: {
+        result: {},
+        crimes: {},
+        deudas: {},
+        historialEMS: {},
+        vehicles: {},
+        homes: {},
+        money: {},
+        business: {}
+      }
     }
   },
-  computed: {
-    ...mapGetters([
-      'getCrimesCart'
-    ])
-  },
-  components: {sidebar},
-  created () {
-    axios
-      .get('http://127.0.0.1:8000/api/files/' + this.$route.params.id)
-      .then(response => (this.file = response.data.data))
+  created() {
+    axios.get(this.$store.state.api.url + '/files/' + this.$route.params.id, {
+      headers: {
+        Authorization: 'Bearer ' + this.$store.state.access_token
+      }
+    }).then(response => this.updateResults(response.data))
   },
   methods: {
-    addCrimes () {
-      axios
-        .post('http://127.0.0.1:8000/api/files/' + this.$route.params.id, this.getCrimesCart)
-        .then((response) => {
-          console.log(response)
-        }).catch((error) => {
-          console.log(error.response.data)
+    updateResults(response) {
+      this.data.result = response[0]
+      if (this.data.crimes) {
+        this.data.crimes = this.getDataFromFile(this.data.result.police_records, 'vRP:police_records')
+      }
+      if (this.data.deudas) {
+        this.data.deudas = this.getDataFromFile(this.data.result.police_records, 'vRP:police_deuda')
+      }
+      if (this.data.historialEMS) {
+        this.data.historialEMS = this.getDataFromFile(this.data.result.police_records, 'vRP:ems_historial')
+      }
+      if (this.data.result.vehicles){
+        this.vehicles = this.data.result.vehicles
+      }
+
+      if (this.data.result.homes){
+        this.homes = this.data.result.homes
+      }
+
+      if (this.data.result.money){
+        this.money = this.data.result.money.bank
+      }
+
+      if (this.data.result.business){
+        this.business = this.data.result.business
+      }
+    },
+    getDataFromFile(data, recordData) {
+      var dataResult = null
+      // traverse police records and get all info
+      data.forEach(function (record) {
+        if (record.dkey === recordData) {
+          dataResult = record.dvalue
+        }
+      })
+      if (dataResult) {
+        dataResult = dataResult.split('<br />')
+
+        dataResult = dataResult.filter(function (e) {
+          return e
         })
+        return dataResult
+      } else {
+        return null
+      }
     }
   }
 }
