@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       auth: {email: '', password: ''},
-      login_url: process.env.API_URL + '/oauth/token',
+      login_url: this.$store.state.api.login + '/oauth/token',
       error: null
     }
   },

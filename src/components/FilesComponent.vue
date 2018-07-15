@@ -1,5 +1,12 @@
 <template>
   <div class="row">
+    <v-wait for="my list is to load">
+      <template slot="waiting">
+        <div>
+          <h2 class="text-center">Cargando fichas de ciudadanos...</h2>
+        </div>
+      </template>
+    </v-wait>
     <div class="col-md-3" v-for="file in files"
          v-show="(file.firstname.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.name.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.registration.toLowerCase()).indexOf(query.toLowerCase()) !== -1">
       <ficha :file="file"></ficha>
@@ -14,7 +21,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      files: null
+      files: {}
     }
   },
   props: {
@@ -25,11 +32,15 @@ export default {
   },
   components: {ficha},
   created () {
+    this.$wait.start('my list is to load')
     axios.get(this.$store.state.api.url + '/files', {
       headers: {
         Authorization: 'Bearer ' + this.$store.state.access_token
       }
-    }).then(response => this.updateFiles(response))
+    }).then(response => {
+      this.updateFiles(response)
+      this.$wait.end('my list is to load')
+    })
   },
   methods: {
     updateFiles (files){

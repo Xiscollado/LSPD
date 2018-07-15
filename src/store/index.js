@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import VueWait from 'vue-wait'
 
 Vue.use(Vuex)
+Vue.use(VueWait)
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],
@@ -20,7 +22,8 @@ export default new Vuex.Store({
     fine: 0,
     months: 0,
     api: {
-      url: 'http://localhost:8000/api'
+      url: 'http://localhost:8000/api',
+      login: 'http://localhost:8000'
     }
   },
   mutations: {

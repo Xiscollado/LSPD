@@ -6,9 +6,11 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import i18n from './lang'
+import VueWait from 'vue-wait'
 
 Vue.config.productionTip = false
 
+// Check if user is logged in
 router.beforeEach((to, from, next) => {
   if (!store.state.access_token && to.path !== '/login') {
     next('/login')
@@ -24,6 +26,10 @@ new Vue({
   store,
   axios,
   i18n,
+  wait: new VueWait({
+    useVuex: true,
+    vuexModuleName: 'wait'
+  }),
   components: {App},
   template: '<App/>'
 })

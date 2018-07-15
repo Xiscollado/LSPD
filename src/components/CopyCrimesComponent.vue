@@ -4,6 +4,7 @@
       <div class="row mb-4">
         <div class="col">
           <h2><strong>Atestado de la denuncia</strong></h2>
+          <p>El atestado de la denuncia está listo. Copia el atestado usando el botón y pégalo en el campo correspondiente.</p>
           <div class="card mt-4">
             <div class="card-header">Texto de la multa</div>
             <div class="card-body" id="copyToClipBoard">
