@@ -1,26 +1,26 @@
 <template>
-  <nav class="navbar navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-dark bg-primary fixed-top">
     <div class="container">
 
       <a class="navbar-brand" href="#">
-        <img src="../assets/lspd_logo.png" height="50" alt="">
+        <img src="../assets/lspd_logo_light.png" height="50" alt="">
       </a>
 
       <ul class="nav justify-content-end">
         <li class="nav-item">
           <router-link class="nav-link" to="/">
-            Fichas
+            FICHAS
           </router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/penal-code">
-            Código penal
+            CÓDIGO PENAL
           </router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/login" v-if="!accessToken">{{ $t("topbar.login")
             }}</router-link>
-          <a class="nav-link" href="#" v-on:click.prevent="logout" v-else>logout</a>
+          <a class="nav-link" href="#" v-on:click.prevent="logout" v-else>SALIR</a>
         </li>
       </ul>
 

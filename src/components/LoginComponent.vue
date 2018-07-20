@@ -32,6 +32,7 @@ export default {
     return {
       auth: {email: '', password: ''},
       login_url: this.$store.state.api.login + '/oauth/token',
+      api_url: this.$store.state.api.url,
       error: null
     }
   },
@@ -68,6 +69,21 @@ export default {
       })
         .then((response) => {
           this.updateAccessToken(response.data)
+          this.getUser()
+        })
+        .catch(error => this.updateErrorMessage(error))
+    },
+    getUser: function () {
+      axios({
+        method: 'get',
+        url: this.api_url + '/user',
+        headers: {
+          'Accept': 'application/json',
+          Authorization: 'Bearer ' + this.$store.state.access_token
+        }
+      })
+        .then((response) => {
+          this.$store.state.user = response.data
           this.$router.push('/')
         })
         .catch(error => this.updateErrorMessage(error))

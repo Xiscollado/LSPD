@@ -8,6 +8,7 @@
       </template>
     </v-wait>
     <div class="col-md-3" v-for="file in files"
+         v-if="filter === 'seek' && file.details && file.details.underSeek || filter === '' || filter === 'danger' && file.details && file.details.dangerous "
          v-show="(file.firstname.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.name.toLowerCase()).indexOf(query.toLowerCase()) !== -1 || (file.registration.toLowerCase()).indexOf(query.toLowerCase()) !== -1">
       <ficha :file="file"></ficha>
     </div>
@@ -17,7 +18,7 @@
 <script>
 import ficha from './FileComponent'
 import axios from 'axios'
-
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -29,6 +30,9 @@ export default {
       type: String,
       required: false
     }
+  },
+  computed: {
+    ...mapGetters(['filter'])
   },
   components: {ficha},
   created () {

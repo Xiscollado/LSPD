@@ -9,12 +9,17 @@ Vue.use(VueWait)
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    filter: null,
     error: null,
     client_secret: 'S8Q6uTJD9M1DdqrdNNWoxGGuIG1Z3nI6DaHWpreD',
     client_id: 3,
     grant_type: 'password',
     access_token: null,
-    user: {},
+    user: {
+      admin: {
+        isAdmin: 0
+      }
+    },
     penalCode: {
       showChapter: null
     },
@@ -65,6 +70,9 @@ export default new Vuex.Store({
     },
     deleteAccessToken(state) {
       state.access_token = null
+    },
+    addFilter(state, filter) {
+      state.filter = filter
     }
   },
   actions: {
@@ -88,6 +96,9 @@ export default new Vuex.Store({
     },
     deleteAccessToken(state){
       state.commit('deleteAccessToken')
+    },
+    addFilter(state, filter) {
+      state.commit('addFilter', filter)
     }
   },
   getters: {
@@ -108,6 +119,12 @@ export default new Vuex.Store({
     },
     accessToken(state) {
       return state.access_token
+    },
+    filter(state){
+      return state.filter;
+    },
+    user(state){
+      return state.user
     }
   }
 })

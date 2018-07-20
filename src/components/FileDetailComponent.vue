@@ -58,14 +58,14 @@
             <span v-if="data.dangerous === 1" class="badge badge-danger">Peligroso</span>
             <span v-if="data.underseek === 1" class="badge badge-warning">En búsqueda y captura</span>
             <hr>
-            <button class="btn btn-info btn-block" data-toggle="modal" data-target="#updateImageModal">Actualizar foto</button>
-            <button class="btn btn-info btn-block"
+            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#updateImageModal">Actualizar foto</button>
+            <button class="btn btn-secondary btn-block"
                     v-on:click="updateState({state: 'underseek', value: data.underseek})">Actualizar búsqueda
             </button>
-            <button class="btn btn-info btn-block"
+            <button class="btn btn-secondary btn-block"
                     v-on:click="updateState({state: 'dangerous', value: data.dangerous})">Actualizar peligroso
             </button>
-            <button class="btn btn-info btn-block" data-toggle="modal" data-target="#updateNoteModal">Actualizar notas
+            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#updateNoteModal">Actualizar notas
             </button>
             <button class="btn btn-danger btn-block" v-on:click="deleteNote()">Borrar notas</button>
           </header>
