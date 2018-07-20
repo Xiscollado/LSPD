@@ -2,7 +2,7 @@
   <section class="mt-4 container mb-4">
     <div class="row justify-content-center">
       <div class="col-6 text-center">
-        <img src="../assets/lspd_logo.png" height="150" class="mb-4">
+        <img src="../assets/lspd_logo.png" height="80" class="mb-4">
         <form class="text-left">
           <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
