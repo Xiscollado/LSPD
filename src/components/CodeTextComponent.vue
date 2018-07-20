@@ -7,11 +7,13 @@
       </div>
       <div class="card-body">
         <p class="card-text">{{ crime.description }}</p>
-        <small>{{ crime.fine }}$ / {{ crime.months }} meses</small>
+        <p><strong>{{ crime.fine }}$</strong> / <strong>{{ crime.months }}</strong> meses</p>
+        <small>Última actualización: {{ crime.updated_at }}</small>
       </div>
       <div class="card-footer">
-        <button class="btn btn-primary btn-sm" v-on:click="addCrime(crime)"><i class="fas fa-shopping-cart pr-2"></i> Añadir crimen</button>
+        <button class="btn btn-primary btn-sm" v-on:click="addCrime(crime)"><i class="fas fa-cart-plus pr-2"></i> Añadir crimen</button>
         <button v-if="user.admin && user.admin.isAdmin === 1" class="btn btn-warning btn-sm" data-toggle="modal" :data-target="['#modalCrime-' + crime.id]"><i class="fas fa-pencil-alt pr-2"></i> Modificar crimen</button>
+        <button v-if="user.admin && user.admin.isAdmin === 1" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteCrimeModal"><i class="fas fa-pencil-alt pr-2"></i> borrar crimen</button>
       </div>
     </div>
   </div>
@@ -59,6 +61,25 @@
       </div>
     </div>
   </div>
+  <div v-for="(crime, index) in penalCode" v-if="actualChapter === crime.chapterId || !actualChapter" class="modal fade" tabindex="-1" role="dialog" id="deleteCrimeModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">¿Estás seguro de que quieres borrar?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Esta operación no tiene vuelta atrás</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" v-on:click="deleteCrime(crime.id, index)">Borrar artículo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 </template>
 <script>
@@ -96,7 +117,7 @@ export default {
     ...mapActions({
       addCrime: 'addCrimeAction'
     }),
-    updateCrime(crime){
+    updateCrime (crime){
       $('#modalCrime-' + crime.id).modal('toggle')
       axios({
         method: 'post',
@@ -108,6 +129,25 @@ export default {
         }
       })
         .then((response) => {
+          return response
+        })
+        .catch(error => {
+          return error
+        })
+    },
+    deleteCrime (crimeId, index){
+      $('#deleteCrimeModal').modal('toggle')
+      axios({
+        method: 'delete',
+        url: this.$store.state.api.url + '/crimes/' + crimeId,
+        data: {crimeId: crimeId},
+        headers: {
+          'Accept': 'application/json',
+          Authorization: 'Bearer ' + this.$store.state.access_token
+        }
+      })
+        .then((response) => {
+          this.penalCode.splice(index, 1)
           return response
         })
         .catch(error => {
