@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <topbar></topbar>
+    <topbar v-if="this.$route.path !== '/login'"></topbar>
     <router-view/>
-    <footer class="recto-footer">
+    <footer class="recto-footer" v-if="this.$route.path !== '/login'">
       <div class="container">
         <div class="container text-center">
           <strong>R.E.C.T.O.</strong> Todos los derechos reservados, Despistaos.es by Despistaos LSPD Team

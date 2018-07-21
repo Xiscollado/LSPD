@@ -49,25 +49,34 @@
           <img v-else src="../assets/placeholder.png" alt="Criminal image" class="img-fluid img-thumbnail mb-4">
           <header class="mb-4">
             <h2 class="mb-3"><strong>{{ data.result.name }} {{ data.result.firstname }}</strong></h2>
-            <h5><strong>DNI:</strong> {{ data.result.registration }}</h5>
-            <h5><strong>ID:</strong> {{ data.result.user_id }}</h5>
-            <h5><strong>EDAD:</strong> {{ data.result.age }}</h5>
-            <h5><strong>TELF:</strong> {{ data.result.phone }}</h5>
-            <h5><strong>BANK:</strong> {{ data.money.bank }} $</h5>
+            <h5><strong><i class="fas fa-id-card-alt pr-2"></i> DNI:</strong> {{ data.result.registration }}</h5>
+            <h5><strong><i class="fas fa-fingerprint pr-2"></i> ID:</strong> {{ data.result.user_id }}</h5>
+            <h5><strong><i class="fas fa-birthday-cake pr-2"></i> EDAD:</strong> {{ data.result.age }}</h5>
+            <h5><strong><i class="fas fa-phone pr-2"></i> TELF:</strong> {{ data.result.phone }}</h5>
+            <h5><strong><i class="fas fa-money-check-alt pr-2"></i> BANK:</strong> {{ data.money.bank }} $</h5>
             <hr>
             <span v-if="data.dangerous === 1" class="badge badge-danger">Peligroso</span>
             <span v-if="data.underseek === 1" class="badge badge-warning">En búsqueda y captura</span>
             <hr>
-            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#updateImageModal">Actualizar foto</button>
-            <button class="btn btn-secondary btn-block"
-                    v-on:click="updateState({state: 'underseek', value: data.underseek})">Actualizar búsqueda
-            </button>
-            <button class="btn btn-secondary btn-block"
-                    v-on:click="updateState({state: 'dangerous', value: data.dangerous})">Actualizar peligroso
-            </button>
-            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#updateNoteModal">Actualizar notas
-            </button>
-            <button class="btn btn-danger btn-block" v-on:click="deleteNote()">Borrar notas</button>
+            <div class="btn-group-vertical btn-block">
+              <button class="btn btn-secondary btn-block text-left" data-toggle="modal" data-target="#updateImageModal">
+                <i class="fas fa-images pr-2"></i> Actualizar foto
+              </button>
+              <button class="btn btn-secondary btn-block text-left"
+                      v-on:click="updateState({state: 'underseek', value: data.underseek})"><i
+                class="fab fa-searchengin pr-2"></i> Actualizar búsqueda
+              </button>
+              <button class="btn btn-secondary btn-block text-left"
+                      v-on:click="updateState({state: 'dangerous', value: data.dangerous})"><i
+                class="fas fa-exclamation-triangle pr-2"></i> Actualizar peligroso
+              </button>
+              <button class="btn btn-secondary btn-block text-left" data-toggle="modal" data-target="#updateNoteModal">
+                <i class="fas fa-notes-medical pr-2"></i> Actualizar notas
+              </button>
+              <button class="btn btn-danger btn-block text-left" v-on:click="deleteNote()"><i
+                class="fas fa-trash-alt pr-2"></i> Borrar notas
+              </button>
+            </div>
           </header>
         </div>
         <div class="col-md-9">
@@ -131,7 +140,7 @@ export default {
         note: '',
         dangerous: 0,
         underseek: 0,
-        image : null,
+        image: null,
         result: {},
         crimes: {},
         deudas: null,
@@ -225,7 +234,7 @@ export default {
           return error
         })
     },
-    updateState (newStateObject) {
+    updateState(newStateObject) {
       let value = (newStateObject.value === 1 ? 0 : 1)
       if (newStateObject.state === 'dangerous') {
         this.data.dangerous = value
@@ -248,7 +257,7 @@ export default {
           return error
         })
     },
-    updateImage () {
+    updateImage() {
       axios({
         method: 'post',
         url: this.$store.state.api.url + '/files/' + this.$route.params.id + '/image',

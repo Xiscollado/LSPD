@@ -1,17 +1,20 @@
 <template>
   <section class="mt-4 container mb-4">
+    <img class="login_bg" src="../assets/login_bg.png">
     <div class="row justify-content-center">
       <div class="col-6 text-center">
-        <img src="../assets/lspd_logo.png" height="80" class="mb-4">
+        <img src="../assets/lspd_logo.png" height="200" class="mb-4">
+        <h3><strong>Bienvenido a R.E.C.T.O</strong></h3>
+        <p><strong>R</strong>egistro <strong>E</strong>statal de <strong>C</strong>iviles y <strong>T</strong>rámites <strongq>O</strongq>rgánicos</p>
         <form class="text-left">
           <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                   placeholder="Enter email" v-model="auth.email" required>
+                   placeholder="Introduce usuario..." v-model="auth.email" required>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Introduce contraseña..."
                    v-model="auth.password" required>
           </div>
           <button class="btn btn-primary" v-on:click.prevent="sendLogin">Identificarse</button>
@@ -92,5 +95,9 @@ export default {
 }
 </script>
 <style>
-
+  .login_bg{
+    position:fixed;
+    top:0;
+    left:0;
+  }
 </style>
