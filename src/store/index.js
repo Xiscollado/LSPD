@@ -27,8 +27,8 @@ export default new Vuex.Store({
     fine: 0,
     months: 0,
     api: {
-      url: 'http://localhost:8000/api',
-      login: 'http://localhost:8000'
+      url: 'http://api.despistaos.es:8000/api',
+      login: 'http://api.despistaos.es:8000'
     }
   },
   mutations: {
